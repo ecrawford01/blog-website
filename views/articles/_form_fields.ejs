@@ -1,0 +1,15 @@
+<!-- Used as a partial view and shows the fields of the new.ejs page-->
+<div class="form-group">
+  <label for="title">Title</label>
+  <input required value="<%= article.title %>" required type="text" name="title" id="title" class="form-control">
+</div>
+<div class="form-group">
+  <label for="teaser">Teaser</label>
+  <input required value="<%= article.teaser %>" required type="text" name="teaser" id="teaser" class="form-control">
+</div>
+<div class="form-group">
+  <label for="description">Description</label>
+  <textarea name="description" id="description" class="form-control" cols="40"><%= article.description %></textarea>
+</div>
+<a href="/" class="btn btn-secondary">Cancel</a>
+<button type="submit" class="btn btn-primary">Save</button>

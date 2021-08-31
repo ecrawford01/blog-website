@@ -1,0 +1,68 @@
+<!-- Page that shows the details of the article including the article title, -->
+<!-- the teaser(short description), the date it was created, the description, -->
+<!-- and the comments from other users -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>New Article</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-1"><%= article.title %></h1>
+    <div class="text-muted mb-2">
+      <%= article.createdAt.toLocaleDateString() %>
+    </div>
+    <div class="card-text mb-2"><%= article.teaser %></div>
+
+    <!-- buttons that allows the user to either view all of the articles or edit the current article -->
+    <a href="/" class="btn btn-secondary">All Articles</a>
+    <a href="/articles/edit/<%= article.id %>" 
+      class="btn btn-info">Edit</a>
+
+      <!-- shows description of article -->
+      <div class="text-center font-weight-bold">
+        <label for="comments">Description</label>
+      </div>
+    <div class="card-text mb-4"><%= article.description %></div>  
+    <div class="form-group">
+      <div class="text-center font-weight-bold">
+        <label for="comments">Comments</label>
+      </div>
+
+      <!-- allows each comment for the article to generate -->  
+      <form action="" method="POST" onsubmit="return doComment(this)">
+        <input type="hidden" name="article_id" value="<%= article.id %>">
+        <div class="form-group">
+          <textarea class="form-control" rows="1" name="username" placeholder="Username"></textarea>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="3" name="comment" placeholder="Comment"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+
+      <!-- generates each comment -->
+
+      <!-- helper function that will add the current comment to the article -->
+      <script>
+        function doComment (form) {
+          $.ajax({
+            url: "/do-comment",
+            method: "Post",
+            data: {username: form.username.value, comment: form.comment.value, article_id: form.article_id.value},
+            success: function (response) {
+              alert(response)
+            }
+          })
+        }
+      </script>
+  </div>
+</body>
+</html>
